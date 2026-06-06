@@ -1,6 +1,6 @@
 {
   "name": "hubot",
-  "version": "2.19.0",
+  "version": "0.0.0-development",
   "author": "hubot",
   "keywords": [
     "github",
@@ -12,37 +12,36 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/github/hubot.git"
-  },
-  "dependencies": {
-    "async": ">=0.1.0 <1.0.0",
-    "chalk": "^1.0.0",
-    "cline": "^0.8.2",
-    "coffee-script": "1.6.3",
-    "connect-multiparty": "^1.2.5",
-    "express": "^3.21.2",
-    "log": "1.4.0",
-    "optparse": "1.0.4",
-    "scoped-http-client": "0.11.0"
-  },
-  "devDependencies": {
-    "hubot-mock-adapter": "^1.0.0",
-    "coffee-errors": "0.8.6",
-    "mocha": "^2.1.0",
-    "mockery": "^1.4.0",
-    "sinon-chai": "^2.8.0",
-    "sinon": "~1.17.0",
-    "chai": "~2.1.0"
+    "url": "https://github.com/hubotio/hubot.git"
   },
   "engines": {
-    "node": ">= 0.8.x",
-    "npm": ">= 1.1.x"
+    "node": ">= 18",
+    "npm": ">= 9"
   },
-  "main": "./index",
+  "main": "./index.mjs",
   "bin": {
     "hubot": "./bin/hubot"
   },
   "scripts": {
-    "test": "./script/test"
+    "start": "bin/hubot",
+    "gen": "bin/hubot --create myhubot",
+    "pretest": "node script/simple-lint.mjs",
+    "test": "node --test --test-timeout=40000",
+    "test:smoke": "node src/**/*.js",
+    "test:e2e": "bin/e2e-test.sh",
+    "build:local": "npx @hubot-friends/sfab --folder ./docs --destination ./_site --verbose --serve /hubot/ --watch-path ./docs --scripts ./sfab-hooks",
+    "build": "npx @hubot-friends/sfab --folder ./docs --destination ./_site --verbose --scripts ./sfab-hooks"
+  },
+  "release": {
+    "branches": [
+      "main",
+      "next"
+    ],
+    "dryRun": false
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-basic-auth": "^1.2.1",
+    "pino": "^10.3.1"
   }
 }
